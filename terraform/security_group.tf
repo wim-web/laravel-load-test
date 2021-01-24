@@ -39,3 +39,15 @@ resource "aws_security_group" "rds" {
     security_groups = [aws_security_group.web.id]
   }
 }
+
+resource "aws_security_group" "redis" {
+  name   = "load-test-redis"
+  vpc_id = aws_vpc.this.id
+
+  ingress {
+    from_port       = 6379
+    to_port         = 6379
+    protocol        = "tcp"
+    security_groups = [aws_security_group.web.id]
+  }
+}

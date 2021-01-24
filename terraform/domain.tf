@@ -31,3 +31,11 @@ resource "aws_route53_record" "rds" {
   ttl     = 300
   records = [aws_db_instance.load-test.address]
 }
+
+resource "aws_route53_record" "this" {
+  zone_id = aws_route53_zone.private.zone_id
+  name    = "redis.${aws_route53_zone.private.name}"
+  type    = "CNAME"
+  ttl     = 300
+  records = [aws_elasticache_cluster.load-test.cache_nodes.0.address]
+}
