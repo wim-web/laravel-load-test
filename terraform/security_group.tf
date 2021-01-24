@@ -27,3 +27,15 @@ resource "aws_security_group" "web" {
     Name = "load-test-web"
   }
 }
+
+resource "aws_security_group" "rds" {
+  name   = "load-test-rds"
+  vpc_id = aws_vpc.this.id
+
+  ingress {
+    from_port       = 5432
+    to_port         = 5432
+    protocol        = "tcp"
+    security_groups = [aws_security_group.web.id]
+  }
+}
