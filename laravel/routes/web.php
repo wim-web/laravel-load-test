@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\LikeController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +20,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/health_check', function () {
     return "ok";
 });
+
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout']);
+
+Route::get('/user', [UserController::class, 'show']);
+
+Route::post('/articles/{article}/like', [LikeController::class, 'like']);
+Route::delete('/articles/{article}/unlike', [LikeController::class, 'unlike']);
+
+Route::resource('articles', 'ArticleController')->only(['index', 'store', 'show', 'update', 'destroy']);
+
