@@ -35,6 +35,7 @@ resource "aws_db_instance" "load-test" {
   username                     = var.db_user
   password                     = var.db_pass
   allocated_storage            = 10
+  auto_minor_version_upgrade   = false
 }
 
 resource "aws_db_subnet_group" "load-test" {
