@@ -1,0 +1,7 @@
+php_modules:
+  - php-bcmath
+  - php-mbstring
+  - php-pgsql
+  - php-pecl-redis
+  - php-gd
+  - php-dom

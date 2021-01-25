@@ -1,0 +1,45 @@
+- name: install nginx
+  command: amazon-linux-extras install nginx1
+  
+- name: start nginx
+  service:
+    name: nginx
+    state: started
+  
+- name: enable nginx
+  service:
+    name: nginx
+    enabled: true
+  notify:
+    - restart_nginx
+
+- name: configure nginx conf files
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/nginx/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  loop:
+    - nginx.conf
+  notify:
+    - restart_nginx
+    
+- name: set owner & permission for log directory
+  file:
+    path: /var/log/nginx
+    owner: nginx
+    group: root
+    mode: 0775
+    state: directory
+
+- name: set owner & permission for log files
+  file:
+    path: "{{ item }}"
+    owner: nginx
+    group: root
+    mode: 0664
+    state: touch
+  loop:
+    - /var/log/nginx/access.log
+    - /var/log/nginx/error.log
