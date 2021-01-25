@@ -1,7 +1,7 @@
 resource "aws_instance" "web" {
   count                       = 1
   instance_type               = "t2.micro"
-  ami                         = data.aws_ssm_parameter.amzn2.value
+  ami                         = data.aws_ami.web.id
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.public[keys(local.az)[count.index % length(local.az)]].id
   vpc_security_group_ids      = [aws_security_group.web.id]
@@ -11,8 +11,12 @@ resource "aws_instance" "web" {
   }
 }
 
-data "aws_ssm_parameter" "amzn2" {
-  name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+data "aws_caller_identity" "self" {}
+
+data "aws_ami" "web" {
+  most_recent = true
+  name_regex  = "^load-test_"
+  owners      = [data.aws_caller_identity.self.account_id]
 }
 
 resource "aws_iam_instance_profile" "ec2" {
