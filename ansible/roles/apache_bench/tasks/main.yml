@@ -1,0 +1,3 @@
+- name: install ab
+  yum:
+    name: httpd-tools
