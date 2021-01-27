@@ -1,0 +1,23 @@
+- name: Configure your package manager for the agent
+  yum:
+    name: http://yum.newrelic.com/pub/newrelic/el5/x86_64/newrelic-repo-5-3.noarch.rpm
+    
+- name: Start installing the agent
+  yum:
+    name: newrelic-php5
+    
+- name: Finish installing the agent
+  command: newrelic-install install
+  environment:
+    NR_INSTALL_SILENT: 1 
+    
+- name: where newrelic.ini
+  command: php -r "echo(PHP_CONFIG_FILE_SCAN_DIR);"
+  register: newrelic_ini_path
+
+- name: Configure your license key and application name
+  command: >
+    sed -i -e "s/REPLACE_WITH_REAL_KEY/{{ key }}/"
+    -e "s/newrelic.appname[[:space:]]=[[:space:]].*/newrelic.appname=\"{{ name }}\"/"
+    -e '$anewrelic.distributed_tracing_enabled=true'
+    "{{ newrelic_ini_path.stdout }}"/newrelic.ini
