@@ -43,3 +43,21 @@
   loop:
     - /var/log/nginx/access.log
     - /var/log/nginx/error.log
+    
+- name: make dir
+  file:
+    path: /var/www/status
+    recurse: true
+    state: directory
+    owner: nginx
+    group: nginx
+    
+- name: copy file
+  copy:
+    src: status.txt
+    dest: /var/www/status/status.txt
+  notify:
+    - restart_nginx
+  
+  
+  
