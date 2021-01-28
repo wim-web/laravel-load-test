@@ -1,0 +1,18 @@
+- name: install git
+  yum:
+    name: git
+    
+- name: make app dir
+  file:
+    path: /var/www/current
+    state: directory
+  
+- name: git clone only locust
+  shell: |
+    git init
+    git config core.sparsecheckout true
+    git remote add origin https://github.com/wim-web/laravel-load-test.git
+    echo /locust > .git/info/sparse-checkout
+    git pull origin master
+  args:
+    chdir: /var/www/current

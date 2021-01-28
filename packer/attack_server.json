@@ -1,0 +1,40 @@
+{
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "region": "ap-northeast-1",
+            "launch_block_device_mappings": [
+                {
+                    "device_name": "/dev/xvda",
+                    "volume_size": 20,
+                    "iops": 100,
+                    "delete_on_termination": true
+                }
+            ],
+            "source_ami_filter": {
+                "filters": {
+                    "name": "amzn2-ami-hvm-*-x86_64-gp2"
+                },
+                "owners": ["137112412989"],
+                "most_recent": true
+            },
+            "ssh_username": "ec2-user",
+            "ami_name": "attack_{{isotime | clean_ami_name}}",
+            "instance_type": "t2.micro"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+                "sudo amazon-linux-extras install epel",
+                "sudo yum -y install ansible"
+            ]
+        },
+        {
+            "type": "ansible-local",
+            "playbook_file": "../ansible/attack_server.yml",
+            "playbook_dir": "../ansible"
+        }
+    ]
+}

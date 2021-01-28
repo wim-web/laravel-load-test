@@ -1,0 +1,7 @@
+- hosts: localhost
+  become: yes
+  
+  roles:
+    - name: apache_bench
+    - name: locust
+    - name: attack_server
