@@ -33,7 +33,7 @@ Route::delete('/articles/{article}/unlike', [LikeController::class, 'unlike']);
 Route::resource('articles', 'ArticleController')->only(['index', 'show']);
 
 Route::prefix('/user')->group(function () {
-    Route::resource('articles', 'User/ArticleController')->only(['index', 'store', 'update', 'destroy']);
+    Route::resource('articles', 'User\\ArticleController')->only(['index', 'store', 'update', 'destroy']);
     Route::get('/liked_articles', [UserArticleController::class, 'likedArticle']);
 });
 

@@ -18,8 +18,9 @@ class UserSeeder extends Seeder
             
             $attributes = [];
             for ($j = 0; $j < 15000; $j++) { 
+                $number = (15000 * $i) + $j;
                 $attributes[] = [
-                    'name' => "dummy_$i", 'password' => "dummy_$i", 'created_at' => '2000-1-1', 'updated_at' => '2020-1-1'
+                    'name' => "dummy_$number", 'password' => "dummy_$number", 'created_at' => '2000-1-1', 'updated_at' => '2020-1-1'
                 ];
             }
             

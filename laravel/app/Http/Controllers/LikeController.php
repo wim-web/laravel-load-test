@@ -16,7 +16,7 @@ class LikeController extends Controller
 
             $user = $manager->user();
 
-            $article->query()->lockForUpdate()->increment('like_count');
+            $article->query()->where('id', $article->id)->lockForUpdate()->increment('like_count');
 
             return Like::newModelInstance()
                 ->create(['user_id' => $user->id, 'article_id' => $article->id]);
@@ -29,7 +29,7 @@ class LikeController extends Controller
 
             $user = $manager->user();
 
-            $article->query()->lockForUpdate()->decrement('like_count');
+            $article->query()->where('id', $article->id)->lockForUpdate()->decrement('like_count');
 
             Like::query()
                 ->where(['user_id' => $user->id, 'article_id' => $article->id])
