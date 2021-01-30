@@ -1,7 +1,10 @@
 - hosts: localhost
+  gather_facts: false
   become: yes
   
   roles:
+    - name: git
     - name: apache_bench
-    - name: locust
     - name: attack_server
+    - name: locust
+    - name: htop

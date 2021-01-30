@@ -1,0 +1,14 @@
+- name: configure php conf files
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  loop:
+    - php.ini
+    - php-fpm.d/www.conf
+  notify:
+    - restart_php
+    
+

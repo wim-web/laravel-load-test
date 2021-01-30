@@ -1,0 +1,5 @@
+all:
+  children:
+    web:
+      hosts:
+        localhost

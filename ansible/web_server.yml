@@ -1,9 +1,14 @@
 - hosts: localhost
+  gather_facts: false
   become: yes
   
   roles:
+    - name: git
     - name: nginx
     - name: php
     - name: app
-    - name: newrelic
     - name: apache_bench
+    - name: newrelic
+    - name: htop
+    
+    

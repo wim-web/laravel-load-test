@@ -1,0 +1,29 @@
+- composer:
+    command: install
+    working_dir: /var/www/laravel
+    
+- name: storage permission
+  file:
+    path: /var/www/laravel/storage
+    mode: '777'
+    recurse: yes
+    group: nginx
+    
+- name: cache permission
+  file:
+    path: /var/www/laravel/bootstrap/cache
+    mode: '777'
+    recurse: yes
+    group: nginx
+    
+- name: copy env
+  copy:
+    src: .env
+    dest: /var/www/laravel/.env
+    
+- name:
+  shell:
+    php artisan key:generate
+  args:
+    chdir: /var/www/laravel
+  

@@ -46,18 +46,13 @@
     
 - name: make dir
   file:
-    path: /var/www/status
-    recurse: true
+    path: /var/www
     state: directory
-    owner: nginx
-    group: nginx
     
 - name: copy file
   copy:
     src: status.txt
-    dest: /var/www/status/status.txt
-  notify:
-    - restart_nginx
+    dest: /var/www/status.txt
   
   
   

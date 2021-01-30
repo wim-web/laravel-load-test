@@ -1,0 +1,23 @@
+- name: install php
+  command: amazon-linux-extras install php7.3 -y
+  notify:
+    - restart_php
+
+- name: install php modules
+  yum:
+    name: "{{ php_modules }}"
+    state: present
+  notify:
+    - restart_php
+    
+- name: start php-fpm
+  service:
+    name: php-fpm
+    state: started
+
+- name: enable php-fpm
+  service:
+    name:  php-fpm
+    enabled: true
+  notify:
+    - restart_php

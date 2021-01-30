@@ -17,7 +17,7 @@
 
 - name: Configure your license key and application name
   command: >
-    sed -i -e "s/REPLACE_WITH_REAL_KEY/{{ key }}/"
-    -e "s/newrelic.appname[[:space:]]=[[:space:]].*/newrelic.appname=\"{{ name }}\"/"
+    sed -i -e "s/REPLACE_WITH_REAL_KEY/{{ newrelic_key }}/"
+    -e "s/newrelic.appname[[:space:]]=[[:space:]].*/newrelic.appname=\"{{ newrelic_name }}\"/"
     -e '$anewrelic.distributed_tracing_enabled=true'
     "{{ newrelic_ini_path.stdout }}"/newrelic.ini
