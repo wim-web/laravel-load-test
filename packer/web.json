@@ -23,6 +23,10 @@
             "instance_type": "t2.micro"
         }
     ],
+    "variables": {
+        "newrelic_key": "",
+        "newrelic_name": "load-test"
+    },
     "provisioners": [
         {
             "type": "shell",
@@ -33,8 +37,13 @@
         },
         {
             "type": "ansible-local",
-            "playbook_file": "../ansible/setup.yml",
-            "playbook_dir": "../ansible"
+            "playbook_file": "../ansible/web_server.yml",
+            "playbook_dir": "../ansible",
+            "inventory_file": "../ansible/inventories/web.yml",
+            "extra_arguments": [
+                "--extra-vars",
+                "\"newrelic_key={{ user `newrelic_key` }} newrelic_name={{ user `newrelic_name` }}\""
+            ]
         }
     ]
 }

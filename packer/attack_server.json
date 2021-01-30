@@ -34,7 +34,8 @@
         {
             "type": "ansible-local",
             "playbook_file": "../ansible/attack_server.yml",
-            "playbook_dir": "../ansible"
+            "playbook_dir": "../ansible",
+            "inventory_file": "../ansible/inventories/attack.yml"
         }
     ]
 }
