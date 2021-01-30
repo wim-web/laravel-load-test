@@ -17,6 +17,14 @@ resource "aws_route53_record" "alb" {
   }
 }
 
+resource "aws_route53_record" "locust" {
+  zone_id = aws_route53_zone.load_test.zone_id
+  name    = "locust.${var.domain}"
+  type    = "A"
+  ttl     = 300
+  records = [aws_instance.locust[0].public_ip]
+}
+
 resource "aws_route53_zone" "private" {
   name = "load-test"
   vpc {
@@ -32,7 +40,7 @@ resource "aws_route53_record" "rds" {
   records = [aws_db_instance.load-test.address]
 }
 
-resource "aws_route53_record" "this" {
+resource "aws_route53_record" "redis" {
   zone_id = aws_route53_zone.private.zone_id
   name    = "redis.${aws_route53_zone.private.name}"
   type    = "CNAME"

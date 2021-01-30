@@ -1,6 +1,6 @@
 resource "aws_instance" "web" {
   count                       = 1
-  instance_type               = "t2.micro"
+  instance_type               = "m5.large"
   ami                         = data.aws_ami.web.id
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.public[keys(local.az)[count.index % length(local.az)]].id

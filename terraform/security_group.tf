@@ -28,6 +28,22 @@ resource "aws_security_group" "web" {
   }
 }
 
+resource "aws_security_group" "locust" {
+  name   = "locust"
+  vpc_id = aws_vpc.this.id
+
+  ingress {
+    from_port   = 8089
+    to_port     = 8089
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "locust"
+  }
+}
+
 resource "aws_security_group" "rds" {
   name   = "load-test-rds"
   vpc_id = aws_vpc.this.id
