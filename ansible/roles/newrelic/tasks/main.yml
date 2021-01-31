@@ -14,10 +14,21 @@
 - name: where newrelic.ini
   command: php -r "echo(PHP_CONFIG_FILE_SCAN_DIR);"
   register: newrelic_ini_path
+  
+- name: setup newrelic.ini
+  replace:
+    path: "{{ newrelic_ini_path.stdout }}/newrelic.ini"
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+    backup: yes
+  loop:
+    - {regexp: "REPLACE_WITH_REAL_KEY", replace: "{{ newrelic_key }}"}
+    - {regexp: "newrelic.appname\\s=\\s.*", replace: "newrelic.appname=\"{{ newrelic_name }}\""}
+    - {regexp: ";newrelic.transaction_tracer.internal_functions_enabled\\s=\\strue", replace: "newrelic.transaction_tracer.internal_functions_enabled\\s=\\strue"}
+    - {regexp: ";newrelic.framework\\s=\\s\"\"", replace: "newrelic.framework\\s=\\s\"laravel\""}
+    
+- name: distributed_tracing_enabled
+  lineinfile:
+    path: "{{ newrelic_ini_path.stdout }}/newrelic.ini"
+    line: "newrelic.distributed_tracing_enabled=true"
 
-- name: Configure your license key and application name
-  command: >
-    sed -i -e "s/REPLACE_WITH_REAL_KEY/{{ newrelic_key }}/"
-    -e "s/newrelic.appname[[:space:]]=[[:space:]].*/newrelic.appname=\"{{ newrelic_name }}\"/"
-    -e '$anewrelic.distributed_tracing_enabled=true'
-    "{{ newrelic_ini_path.stdout }}"/newrelic.ini
