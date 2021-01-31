@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\User\ArticleController as UserArticleController;
@@ -18,9 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/health_check', function () {
-    return "ok";
-});
+Route::get('/health_check', 'HealthCheckController')->name('health_check');
 
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout']);
