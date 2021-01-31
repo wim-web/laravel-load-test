@@ -17,20 +17,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/health_check', 'HealthCheckController')->name('health_check');
 
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout']);
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/user', [UserController::class, 'show']);
+Route::resource('/articles', 'ArticleController')->only(['index', 'show']);
 
-Route::post('/articles/{article}/like', [LikeController::class, 'like']);
-Route::delete('/articles/{article}/unlike', [LikeController::class, 'unlike']);
+Route::prefix('/articles')->name('articles.')->group(function () {
+    Route::post('/{article}/like', [LikeController::class, 'like'])->name('like');
+    Route::delete('/{article}/unlike', [LikeController::class, 'unlike'])->name('unlike');
+});
 
-Route::resource('articles', 'ArticleController')->only(['index', 'show']);
-
-Route::prefix('/user')->group(function () {
+Route::prefix('/user')->name('user.')->group(function () {
+    Route::get('/', [UserController::class, 'show'])->name('show');
     Route::resource('articles', 'User\\ArticleController')->only(['index', 'store', 'update', 'destroy']);
-    Route::get('/liked_articles', [UserArticleController::class, 'likedArticle']);
+    Route::get('/liked_articles', [UserArticleController::class, 'likedArticle'])->name('liked_index');
 });
 
