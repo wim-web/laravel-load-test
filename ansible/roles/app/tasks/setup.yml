@@ -21,9 +21,33 @@
     src: .env
     dest: /var/www/laravel/.env
     
-- name:
+- name: generate key
   shell:
     php artisan key:generate
   args:
     chdir: /var/www/laravel
+    
+- name: cache config
+  shell:
+    php artisan config:cache
+  args:
+    chdir: /var/www/laravel
+    
+- name: cache route
+  shell:
+    php artisan route:cache
+  args:
+    chdir: /var/www/laravel
+    
+- name: optimize composer
+  shell:
+    composer install --optimize-autoloader --no-dev
+  args:
+    chdir: /var/www/laravel
+    
+- name: restart_php
+  service:
+    name:  php-fpm
+    state: restarted
+    
   

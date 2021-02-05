@@ -5,3 +5,4 @@ php_modules:
   - php-pecl-redis
   - php-gd
   - php-dom
+  - php-opcache
