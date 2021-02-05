@@ -15,7 +15,7 @@ data "aws_caller_identity" "self" {}
 
 data "aws_ami" "web" {
   most_recent = true
-  name_regex  = "^load-test_"
+  name_regex  = "^load-test-improve_"
   owners      = [data.aws_caller_identity.self.account_id]
 }
 
