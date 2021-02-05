@@ -1,5 +1,5 @@
 resource "aws_instance" "web" {
-  count                       = 1
+  count                       = 2
   instance_type               = "m5.large"
   ami                         = data.aws_ami.web.id
   associate_public_ip_address = true
