@@ -23,7 +23,7 @@ Route::get('/health_check', 'HealthCheckController')->name('health_check');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::resource('/articles', 'ArticleController')->only(['index', 'show']);
+Route::resource('/articles', 'ArticleController')->only(['index', 'show', 'store']);
 
 Route::prefix('/articles')->name('articles.')->group(function () {
     Route::post('/{article}/like', [LikeController::class, 'like'])->name('like');

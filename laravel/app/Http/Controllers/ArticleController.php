@@ -18,4 +18,12 @@ class ArticleController extends Controller
     {
         return $article;
     }
+    
+    public function store(Request $request)
+    {
+        Article::newModelInstance()
+            ->forceFill(['user_id' => 1])
+            ->fill($request->only(['title', 'body']))
+            ->save();
+    }
 }
