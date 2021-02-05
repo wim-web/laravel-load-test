@@ -21,7 +21,7 @@ variable "db_pass" {
 }
 
 resource "aws_db_instance" "load-test" {
-  instance_class               = "db.m5.large"
+  instance_class               = "db.m5.2xlarge"
   apply_immediately            = true
   identifier                   = "load-test"
   db_subnet_group_name         = aws_db_subnet_group.load-test.name
