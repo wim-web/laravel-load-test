@@ -9,8 +9,13 @@ class ArticleController extends Controller
 {
     public function index(Request $request)
     {
-        $articles = Article::query()->paginate(100);
-        
+        $page = $request->get('page');
+
+        $articles = Article::query()
+            ->where('id', '>=', (($page - 1) * 100) + 1)
+            ->where('id', '<=', ($page * 100))
+            ->get();
+
         return $articles;
     }
     
