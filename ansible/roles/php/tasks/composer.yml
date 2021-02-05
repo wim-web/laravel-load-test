@@ -7,10 +7,10 @@
   shell: cat /tmp/composer-installer | php -- --install-dir=/usr/local/bin
 
 - name: rename composer.phar to composer
-  shell: mv /usr/local/bin/composer.phar /usr/local/bin/composer
+  shell: mv /usr/local/bin/composer.phar /usr/bin/composer
 
 - name: make composer executable
   file:
-    path: /usr/local/bin/composer
+    path: /usr/bin/composer
     mode: a+x
     state: file
