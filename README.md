@@ -118,3 +118,7 @@ cd /var/www/laravel
 php artisan migrate --seed
 ```
 
+## SSHについて
+
+サーバーにログインするためにSSH接続でなくSession Managerを使用しています。
+
